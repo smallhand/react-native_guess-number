@@ -5,13 +5,20 @@ import PrimaryButton from "../components/PrimaryButton";
 function GameStartScreen() {
   const [enterNumber, setEnterNumber] = useState("");
 
+  function resetInputHandler() {
+    setEnterNumber("");
+  }
+
   function confirmInputHandler() {
     const userNumber = parseInt(enterNumber);
 
     if (isNaN(userNumber) || userNumber <= 0 || userNumber > 99) {
-      Alert.alert("0 ~ 99");
+      Alert.alert("❗Oops", "Please enter a number range: 1 ~ 99", [
+        { text: "Confirm", style: "default", onPress: resetInputHandler },
+      ]);
+      return;
     }
-    setEnterNumber("");
+    resetInputHandler;
   }
 
   return (
@@ -25,7 +32,7 @@ function GameStartScreen() {
         value={enterNumber}
       />
       <View style={styles.buttonContainer}>
-        <PrimaryButton>Reset</PrimaryButton>
+        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
         <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
       </View>
     </View>
